@@ -16,6 +16,7 @@ class PythonOrgSearch(unittest.TestCase):
     def test_search_in_python_org(self):
         driver = self.driver
         driver.get("https://admin:admin123@staging.shopia.com")
+        driver.maximize_window()
         time.sleep(5)
         driver.find_element_by_xpath("//form[@data-product-sku='1309000038901']/button").click()
         time.sleep(5)
@@ -23,7 +24,7 @@ class PythonOrgSearch(unittest.TestCase):
         time.sleep(5)
         driver.find_element_by_xpath("//button[@class='fancybox-close']").click()
         time.sleep(5)
-        # WARNING: 
+        # WARNING:
         # driver.get("https://staging.shopia.com/vitu-mars-11-16gb-rom-2gb-ram-dual-sim-dual-hd-camera-face-id-4g-lte-smartphone-dark-red.html")
         # time.sleep(10)
         # driver.find_element_by_xpath("//label[@for='economy_economy']").click()

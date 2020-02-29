@@ -16,6 +16,7 @@ class PythonOrgSearch(unittest.TestCase):
     def test_search_in_python_org(self):
         driver = self.driver
         driver.get("https://admin:admin123@staging.shopia.com")
+        driver.maximize_window()
         time.sleep(5)
         driver.find_element_by_xpath("//form[@data-product-sku='2034866R']/button").click()
         time.sleep(4)
