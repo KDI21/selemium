@@ -30,27 +30,15 @@ class PythonOrgSearch(unittest.TestCase):
                                        'test'+str(random.randrange(100)), Keys.ENTER)
         driver.find_element_by_xpath("//input[@name='firstname']").send_keys(
                                        '1test'+str(random.randrange(100)), Keys.ENTER)
-
-        #elem = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']")))
-        #elem.send_keys('test'+str(random.randrange(10000))+'@gmail.com', Keys.ENTER)
-        # elem = driver.find_elements_by_xpath("//input[@name='username']")[1]
-        # ActionChains(driver).move_to_element(elem).send_keys('test'+str(random.randrange(10000))+'@gmail.com', Keys.ENTER).perform()
-
-        # driver.find_elements_by_xpath("//input[@name='username']")[1].send_keys(
-        #                                'test'+str(random.randrange(10000))+'@gmail.com', Keys.ENTER)
-        #time.sleep(1)
-        # driver.find_elements_by_xpath("//input[@name='telephone']")[1].send_keys(
-        #                                  random.randint(1000000, 9999999), Keys.ENTER)
-        time.sleep(1)
-        logging.warning("Elements")
-        logging.warning(driver.find_elements_by_xpath("//input[@name='street[1]']"))
-        logging.warning("Element")
-        logging.warning(driver.find_element_by_xpath("//input[@name='street[1]']"))
+        driver.find_elements_by_xpath("//input[@name='username']")[1].send_keys(
+                                       'test'+str(random.randrange(10000))+'@gmail.com', Keys.ENTER)
+        logging.warning(driver.find_elements_by_xpath("//input[@name='telephone']"))
+        driver.find_element_by_xpath("//input[@name='telephone']").send_keys(' 77 '+
+                                         str(random.randint(100000, 999999)), Keys.ENTER)
         driver.find_element_by_xpath("//input[@name='street[1]']").send_keys(
                                          '1test'+str(random.randrange(100)), Keys.ENTER)
-        time.sleep(1)
-        # driver.find_elements_by_xpath("//input[@placehodler='Line2']")[1].send_keys(
-        #                                 '1test'+str(random.randrange(100)), Keys.ENTER)
+        driver.find_element_by_xpath("//input[@name='street[0]']").send_keys(
+                                         '1test'+str(random.randrange(100)), Keys.ENTER)
         time.sleep(1)
         driver.find_elements_by_xpath("//input[@name='region']")[0].send_keys(
                                         '1test'+str(random.randrange(100)), Keys.ENTER)
@@ -60,8 +48,12 @@ class PythonOrgSearch(unittest.TestCase):
         time.sleep(1)
         driver.find_elements_by_xpath("//input[@name='postcode']")[0].send_keys(
                                        random.randrange(1000, 9999), Keys.ENTER)
+        driver.find_element_by_xpath("//button[@data-role='opc-continue']").click()
+        time.sleep(7)
+        driver.find_element_by_xpath("//button[@value='Place Order']").click()
+        time.sleep(5)
+        assert "Success" in driver.title
 
-        time.sleep(19)
     def tearDown(self):
         self.driver.close()
 
