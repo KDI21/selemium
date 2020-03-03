@@ -4,7 +4,6 @@ import logging
 import unittest
 import time
 import random
-import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -37,13 +36,8 @@ class PythonOrgSearch(unittest.TestCase):
         driver.find_element_by_xpath("//a[@class='action showcart']").click()
         driver.find_element_by_xpath("//button[@id='top-cart-btn-checkout']").click()
         time.sleep(7)
-        elem = driver.find_element_by_xpath("//input[@value='economy_economy']")
+        driver.find_element_by_xpath("//input[@value='economy_economy']")
         ActionChains(driver).move_to_element(elem).click().perform()
-        time.sleep(3)
-        economy = driver.find_element_by_xpath("//table[@class='data table totals']/tbody/tr[2]/th/span[2]").text
-        if economy != '(Economy)':
-            logging.warning('delivery method has not changed')
-            sys.exit()
 
 
 
