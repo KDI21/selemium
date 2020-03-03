@@ -4,6 +4,7 @@ import logging
 import unittest
 import time
 import random
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -17,43 +18,58 @@ class PythonOrgSearch(unittest.TestCase):
         driver = self.driver
         driver.get("https://admin:admin123@staging.shopia.com")
         driver.maximize_window()
-        time.sleep(5)
+        time.sleep(6)
+        product_name = driver.find_element_by_xpath("//form[@data-product-sku='2034866R']/ancestor::div[4]/strong/a").text
         driver.find_element_by_xpath("//form[@data-product-sku='2034866R']/button").click()
-        time.sleep(4)
         driver.find_element_by_xpath("//a[@class='action showcart']").click()
+        time.sleep(1)
         driver.find_element_by_xpath("//button[@id='top-cart-btn-checkout']").click()
         time.sleep(4)
         driver.find_element_by_xpath("//button[@data-role='proceed-to-checkout']").click()
         time.sleep(4)
         driver.find_element_by_xpath("//a[@class='continue-guest']").click()
-        time.sleep(10)
-        driver.find_element_by_xpath("//input[@name='lastname']").send_keys(
-                                       'test'+str(random.randrange(100)), Keys.ENTER)
-        driver.find_element_by_xpath("//input[@name='firstname']").send_keys(
-                                       '1test'+str(random.randrange(100)), Keys.ENTER)
-        driver.find_elements_by_xpath("//input[@name='username']")[1].send_keys(
-                                       'test'+str(random.randrange(10000))+'@gmail.com', Keys.ENTER)
-        logging.warning(driver.find_elements_by_xpath("//input[@name='telephone']"))
-        driver.find_element_by_xpath("//input[@name='telephone']").send_keys(' 77 '+
-                                         str(random.randint(100000, 999999)), Keys.ENTER)
-        driver.find_element_by_xpath("//input[@name='street[1]']").send_keys(
-                                         '1test'+str(random.randrange(100)), Keys.ENTER)
-        driver.find_element_by_xpath("//input[@name='street[0]']").send_keys(
-                                         '1test'+str(random.randrange(100)), Keys.ENTER)
-        time.sleep(1)
-        driver.find_elements_by_xpath("//input[@name='region']")[0].send_keys(
-                                        '1test'+str(random.randrange(100)), Keys.ENTER)
-        time.sleep(1)
-        driver.find_elements_by_xpath("//input[@name='city']")[0].send_keys(
-                                       '1test'+str(random.randrange(100)), Keys.ENTER)
-        time.sleep(1)
+        time.sleep(7)
+        lastname = 'test'+str(random.randrange(100))
+        driver.find_element_by_xpath("//input[@name='lastname']").send_keys(lastname, Keys.ENTER)
+        firstname = 'test'+str(random.randrange(100))
+        driver.find_element_by_xpath("//input[@name='firstname']").send_keys(firstname, Keys.ENTER)
+        username = 'test'+str(random.randrange(10000))+'@gmail.com'
+        driver.find_elements_by_xpath("//input[@name='username']")[1].send_keys(username, Keys.ENTER)
+        telephone = ' 77 '+str(random.randint(100000, 999999))
+        driver.find_element_by_xpath("//input[@name='telephone']").send_keys(telephone, Keys.ENTER)
+        street1 = '1test'+str(random.randrange(100))
+        driver.find_element_by_xpath("//input[@name='street[1]']").send_keys(street1, Keys.ENTER)
+        street2 = '1test'+str(random.randrange(100))
+        driver.find_element_by_xpath("//input[@name='street[0]']").send_keys(street2, Keys.ENTER)
+        # driver.find_elements_by_xpath("//input[@name='region']")[0].send_keys(
+        #                                 '1test'+str(random.randrange(100)), Keys.ENTER)
+        # driver.find_elements_by_xpath("//input[@name='city']")[0].send_keys(
+        #                                '1test'+str(random.randrange(100)), Keys.ENTER)
         driver.find_elements_by_xpath("//input[@name='postcode']")[0].send_keys(
                                        random.randrange(1000, 9999), Keys.ENTER)
         driver.find_element_by_xpath("//button[@data-role='opc-continue']").click()
-        time.sleep(7)
-        driver.find_element_by_xpath("//button[@value='Place Order']").click()
         time.sleep(5)
+        driver.find_element_by_xpath("//button[@value='Place Order']").click()
+        time.sleep(7)
         assert "Success" in driver.title
+        test_name = firstname+' '+lastname
+        test_street = street2+' '+street1
+        test_telephone = '+374'+telephone
+        name = driver.find_element_by_xpath("//div[@class='shipTo info-pay-block pay-product-info']/div[2]/div[2]/span").text
+        street = driver.find_element_by_xpath("//div[@class='shipTo info-pay-block pay-product-info']/div[3]/div[2]/span").text
+        telephone = driver.find_element_by_xpath("//div[@class='shipTo info-pay-block pay-product-info']/div[4]/div[2]/span").text
+        test_product = driver.find_element_by_xpath("//div[@class='description-prod-pay']/div[2]").text
+        if product_name != test_product:
+            sys.exit()
+        if name != test_name:
+            logging.warning('The saved name does not match the entered')
+            sys.exit()
+        if street != test_street:
+            logging.warning('The saved address does not match entered')
+            sys.exit()
+        if telephone != test_telephone:
+            logging.warning('The stored number does not match the entered')
+            sys.exit()
 
     def tearDown(self):
         self.driver.close()
