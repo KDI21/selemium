@@ -38,7 +38,7 @@ class PythonOrgSearch(unittest.TestCase):
         driver.find_element_by_xpath("//a[@class='action showcart']").click()
         driver.find_element_by_xpath("//button[@id='top-cart-btn-checkout']").click()
         time.sleep(7)
-        elem = driver.find_element_by_xpath("//input[@value='economy_economy']")
+        driver.find_element_by_xpath("//input[@value='economy_economy']")
         ActionChains(driver).move_to_element(elem).click().perform()
 
         driver.find_element_by_xpath("//button[@data-role='proceed-to-checkout']").click()

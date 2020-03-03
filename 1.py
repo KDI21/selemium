@@ -60,6 +60,7 @@ class PythonOrgSearch(unittest.TestCase):
         telephone = driver.find_element_by_xpath("//div[@class='shipTo info-pay-block pay-product-info']/div[4]/div[2]/span").text
         test_product = driver.find_element_by_xpath("//div[@class='description-prod-pay']/div[2]").text
         if product_name != test_product:
+            logging.warning('The saved product does not match entered')
             sys.exit()
         if name != test_name:
             logging.warning('The saved name does not match the entered')
