@@ -4,7 +4,6 @@ import logging
 import unittest
 import time
 import random
-import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -41,10 +40,6 @@ class PythonOrgSearch(unittest.TestCase):
         driver.find_element_by_xpath("//input[@name='street[1]']").send_keys(street1, Keys.ENTER)
         street2 = '1test'+str(random.randrange(100))
         driver.find_element_by_xpath("//input[@name='street[0]']").send_keys(street2, Keys.ENTER)
-        # driver.find_elements_by_xpath("//input[@name='region']")[0].send_keys(
-        #                                 '1test'+str(random.randrange(100)), Keys.ENTER)
-        # driver.find_elements_by_xpath("//input[@name='city']")[0].send_keys(
-        #                                '1test'+str(random.randrange(100)), Keys.ENTER)
         driver.find_elements_by_xpath("//input[@name='postcode']")[0].send_keys(
                                        random.randrange(1000, 9999), Keys.ENTER)
         driver.find_element_by_xpath("//button[@data-role='opc-continue']").click()
@@ -59,18 +54,10 @@ class PythonOrgSearch(unittest.TestCase):
         street = driver.find_element_by_xpath("//div[@class='shipTo info-pay-block pay-product-info']/div[3]/div[2]/span").text
         telephone = driver.find_element_by_xpath("//div[@class='shipTo info-pay-block pay-product-info']/div[4]/div[2]/span").text
         test_product = driver.find_element_by_xpath("//div[@class='description-prod-pay']/div[2]").text
-        if product_name != test_product:
-            logging.warning('The saved product does not match entered')
-            sys.exit()
-        if name != test_name:
-            logging.warning('The saved name does not match the entered')
-            sys.exit()
-        if street != test_street:
-            logging.warning('The saved address does not match entered')
-            sys.exit()
-        if telephone != test_telephone:
-            logging.warning('The stored number does not match the entered')
-            sys.exit()
+        assert product_name == test_product
+        assert name == test_name
+        assert street == test_street
+        assert telephone == test_telephone
 
     def tearDown(self):
         self.driver.close()
